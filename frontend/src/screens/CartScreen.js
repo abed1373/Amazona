@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useParams, useLocation, Link, useNavigate } from 'react-router-dom'
-import { addToCart } from '../actions/cartActions'
+import { addToCart, removeFromCart } from '../actions/cartActions'
 import { useDispatch, useSelector } from 'react-redux'
 import MessageBox from '../components/MessageBox'
 
@@ -10,7 +10,7 @@ export default function CartScreen() {
   const location = useLocation()
   const qty = new URLSearchParams(location.search).get('qty')
   const cart = useSelector((state) => state.cart)
-  const cartItems = cart
+  const {cartItems} = cart
   const dispatch = useDispatch()
   const navigate=useNavigate()
   useEffect(() => {
@@ -19,8 +19,8 @@ export default function CartScreen() {
     }
   }, [dispatch, qty, slug])
 
-  const removeFromCartHandler = () => {
-    //delete action
+  const removeFromCartHandler = (slug) => {
+    dispatch(removeFromCart(slug))
   }
 
   const checkoutHandler=()=>{
@@ -36,7 +36,7 @@ navigate('/signin?redirect=shipping')
           </MessageBox>
         ) : (
           <ul>
-            {cart.cartItems.map((item) => (
+            {cartItems.map((item) => (
               <li key={item.product}>
                 <div className="row">
                   <div>
@@ -87,7 +87,7 @@ navigate('/signin?redirect=shipping')
             <li>
               <h2>
                 Subtotal ({cart.cartItems.reduce((a, c) => a + c.qty, 0)} items)
-                : ${cart.cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
+                : ${cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
               </h2>
             </li>
             <li>
