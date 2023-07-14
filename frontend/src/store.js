@@ -2,12 +2,13 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 
 import { productDetailsReducer, productListReducer } from './reducers/productReducers'
 import { cartReducer } from './reducers/cartReducers'
-const initailState = {
-  cart:{
+const initialState = {
+  cart: {
     cartItems: localStorage.getItem('cartItems')
     ? JSON.parse(localStorage.getItem('cartItems'))
-    : []
-  }
+    : [],
+   
+  },
 }
 
 const reducer = combineReducers({
@@ -15,5 +16,5 @@ const reducer = combineReducers({
   productDetails:productDetailsReducer,
   cart:cartReducer,
 })
-const store = configureStore({ reducer }, initailState)
+const store = configureStore({ reducer }, initialState)
 export default store
