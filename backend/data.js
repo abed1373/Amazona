@@ -1,4 +1,13 @@
+impo
+
 const data={
+  users:[
+    {
+      name:'Basir',
+      email:'admin@example.com',
+      password:bcrypt.hashAsync('1234',8)
+    }
+  ],
     products:[
         {
             _id:'1',
