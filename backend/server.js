@@ -1,25 +1,37 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import dotenv from 'dotenv'
 import data from './data.js'
-import userRouter from './routers/userRouter.js'
 
-const app = express()
+import seedRouter from './routers/seedRoutes.js'
+import productRouter from './routers/productRouter.js'
 
-mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/amazona')
+dotenv.config()
 
-app.get('/api/products/slug/:slug',(req,res)=>{
-    const product=data.products.find((x)=>x.slug ===req.params.slug)
-    if (product){
-        res.send(product);
-    }else{
-        res.status(404).send({message:'Product not Found'});
-    }
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log('connected to db');
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+
+const app = express() 
+
+app.use('/api/seed',seedRouter)
+app.use('/api/products',productRouter)
+
+
+
+
+
+app.use((err, req, res, next) => {
+  res.status(500).send({ message: err.message })
 })
 
-app.get('/api/products',(req,res)=>{
-    res.send(data.products)
-})
-app.use('/api/users',userRouter)
+
 app.get('/', (req, res) => {
   res.send('Server is ready')
 })

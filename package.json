@@ -19,7 +19,9 @@
   "homepage": "https://github.com/abed1373/amazona#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-async-handler": "^1.1.4",
     "mongoose": "^7.3.4"
   },
   "devDependencies": {
