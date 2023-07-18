@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { signout } from './actions/userActions'
 import SigninScreen from './screens/SigninScreen'
 import RegisterScreen from './screens/RegisterScreen'
+import ShippingAddressScreen from './screens/ShippingAddressScreen'
 
 
 function App() {
@@ -56,6 +57,8 @@ dispatch(signout())
           <Routes>
            <Route path='/signin' element={<SigninScreen/>}/>
            <Route path="/register" element={<RegisterScreen />}/>
+           <Route path="/signin/shipping" element={<ShippingAddressScreen />}/>
+
             <Route path="/cart/:slug?" element={<CartScreen />} />
             <Route path="/product/:slug" element={<ProductScreen />} />
             <Route path="/" element={<HomeScreen />} />
