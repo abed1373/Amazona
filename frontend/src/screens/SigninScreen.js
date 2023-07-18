@@ -11,9 +11,9 @@ const [password,setPassword]=useState('')
 
 const navigate=useNavigate();
 
-const {search}=useLocation();
-const redirectInUrl =new URLSearchParams(search).get('redirect')
-const redirect=redirectInUrl ? redirectInUrl :'/';
+const { search } = useLocation();
+const redirectInUrl = new URLSearchParams(search).get('redirect');
+const redirect = redirectInUrl ? redirectInUrl : '/';
 
 const userSignin=useSelector(state=>state.userSignin)
 const {userInfo,loading,error}=userSignin
@@ -65,9 +65,12 @@ navigate(redirect)
         </div>
         <div>
             <label/>
-           <div>New customer? {' '}
-           <Link to='/register'>Create your account</Link>
-           </div>
+            <div>
+            New customer?{' '}
+            <Link to={`/register?redirect=${redirect}`}>
+              Create your account
+            </Link>
+          </div>
         </div>
       </form>
     </div>
