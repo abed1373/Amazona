@@ -14,11 +14,15 @@ export default function ShippingAddressScreen() {
   if (!userInfo) {
     navigate('/signin')
   }
-  const [fullName, setFullName] = useState( '')
-  const [address, setAddress] = useState( '')
-  const [city, setCity] = useState( '')
-  const [postalCode, setPostalCode] = useState( '')
-  const [country, setCountry] = useState( '')
+  const [fullName, setFullName] = useState( '');
+  const [address, setAddress] = useState( '');
+  const [city, setCity] = useState( '');
+  const [postalCode, setPostalCode] = useState(
+     ''
+  );
+  const [country, setCountry] = useState('');
+
+
   const dispatch = useDispatch()
 
   const submitHandler = (e) => {

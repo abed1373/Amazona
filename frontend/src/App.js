@@ -9,7 +9,7 @@ import { signout } from './actions/userActions'
 import SigninScreen from './screens/SigninScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import ShippingAddressScreen from './screens/ShippingAddressScreen'
-
+import PaymentMethodScreen from './screens/PaymentMethodScreen'
 
 function App() {
   const cart = useSelector((state) => state.cart)
@@ -18,10 +18,10 @@ function App() {
   const userSignin = useSelector((state) => state.userSignin)
   const { userInfo } = userSignin
 
-  const dispatch=useDispatch()
+  const dispatch = useDispatch()
 
-  const signoutHandler=()=>{
-dispatch(signout())
+  const signoutHandler = () => {
+    dispatch(signout())
   }
   return (
     <BrowserRouter>
@@ -41,13 +41,15 @@ dispatch(signout())
             </Link>
             {userInfo ? (
               <div className="dropdown">
- <Link to="#">{userInfo.name} <i className='fa fa-caret-down'></i>{' '} 
- </Link>
- <ul className='dropdown-content'>
-<Link to='#signout' onClick={signoutHandler}>Sign Out</Link>
- </ul>
+                <Link to="#">
+                  {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
+                </Link>
+                <ul className="dropdown-content">
+                  <Link to="#signout" onClick={signoutHandler}>
+                    Sign Out
+                  </Link>
+                </ul>
               </div>
-             
             ) : (
               <Link to="/signin">Sign In</Link>
             )}
@@ -55,10 +57,13 @@ dispatch(signout())
         </header>
         <main>
           <Routes>
-           <Route path='/signin' element={<SigninScreen/>}/>
-           <Route path="/register" element={<RegisterScreen />}/>
-           <Route path="/signin/shipping" element={<ShippingAddressScreen />}/>
-
+            <Route path="/signin" element={<SigninScreen />} />
+            <Route path="/register" element={<RegisterScreen />} />
+            <Route
+              path="/signin/shipping"
+              element={<ShippingAddressScreen />}
+            />
+            <Route path="payment" element={<PaymentMethodScreen />} />
             <Route path="/cart/:slug?" element={<CartScreen />} />
             <Route path="/product/:slug" element={<ProductScreen />} />
             <Route path="/" element={<HomeScreen />} />
