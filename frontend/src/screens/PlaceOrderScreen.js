@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CheckoutSteps from '../components/CheckoutSteps'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import { createOrder } from '../actions/orderActions'
+import { ORDER_CREATE_RESET } from '../constants/orderConstants'
+import LoadingBox from '../components/LoadingBox'
+import MessageBox from '../components/MessageBox'
 
 export default function PlaceOrderScreen() {
   const navigate = useNavigate()
@@ -9,6 +13,8 @@ export default function PlaceOrderScreen() {
   if (!cart.paymentMethod) {
     navigate('/payment')
   }
+  const orderCreate=useSelector(state=>state.orderCreate)
+  const {loading,success,error,order}=orderCreate
 
   const toPrice = (num) => Number(num.toFixed(2)) //5.123 =>"5.12"=>5.12
   cart.itemsPrice = toPrice(
@@ -18,7 +24,16 @@ export default function PlaceOrderScreen() {
   cart.taxPrice = toPrice(0.15 * cart.itemsPrice)
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice
 
-  const placeOrderHandler = () => {}
+  const dispatch=useDispatch();
+  const placeOrderHandler = () => {
+dispatch(createOrder({...cart,orderItems:cart.cartItems}))
+  }
+  useEffect(()=>{
+if(success){
+  navigate(`/order/${order._id}`)
+  dispatch({type:ORDER_CREATE_RESET});
+}
+  },[dispatch, navigate, order, success])
   return (
     <div>
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
@@ -122,6 +137,8 @@ export default function PlaceOrderScreen() {
                   Place Order
                 </button>
               </li>
+              {loading && <LoadingBox></LoadingBox>}
+              {error && <MessageBox variant='danger'>{error}</MessageBox>}
             </ul>
           </div>
         </div>

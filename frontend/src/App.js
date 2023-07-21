@@ -61,6 +61,7 @@ function App() {
             <Route path="/signin" element={<SigninScreen />} />
             <Route path="/register" element={<RegisterScreen />} />
             <Route path="/placeorder" element={<PlaceOrderScreen />} />
+            
             <Route
               path="/signin/shipping"
               element={<ShippingAddressScreen />}
